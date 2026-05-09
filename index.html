@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tournament 2026 — Registration Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #F0D98B;
+    --gold-dark: #8A6B28;
+    --navy: #0D1B2A;
+    --navy-mid: #1A2E45;
+    --navy-light: #243B55;
+    --cream: #F8F4EC;
+    --cream-dark: #EDE7D8;
+    --text-primary: #0D1B2A;
+    --text-muted: #5C6B7A;
+    --red: #C0392B;
+    --green: #1E8449;
+    --white: #FFFFFF;
+    --border: rgba(13,27,42,0.12);
+    --border-gold: rgba(201,168,76,0.4);
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    min-height: 100vh;
+    color: var(--text-primary);
+  }
+
+  /* ---- HERO HEADER ---- */
+  .hero {
+    background: var(--navy);
+    position: relative;
+    overflow: hidden;
+    padding: 56px 24px 48px;
+    text-align: center;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(201,168,76,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-block;
+    border: 1px solid var(--border-gold);
+    color: var(--gold-light);
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 6px 18px;
+    border-radius: 100px;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(36px, 8vw, 64px);
+    font-weight: 800;
+    color: var(--white);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+  .hero h1 span {
+    color: var(--gold);
+  }
+  .hero-sub {
+    margin-top: 14px;
+    color: rgba(255,255,255,0.5);
+    font-size: 15px;
+    font-weight: 300;
+    letter-spacing: 0.04em;
+  }
+  .hero-line {
+    width: 48px;
+    height: 2px;
+    background: var(--gold);
+    margin: 22px auto 0;
+    border-radius: 2px;
+  }
+  .hero-dots {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size: 28px 28px;
+    pointer-events: none;
+  }
+
+  /* ---- MAIN CONTAINER ---- */
+  .container {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 40px 16px 80px;
+  }
+
+  /* ---- CARD ---- */
+  .card {
+    background: var(--white);
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    box-shadow: 0 2px 32px rgba(13,27,42,0.07);
+  }
+  .card + .card { margin-top: 16px; }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 22px 28px 18px;
+    border-bottom: 1px solid var(--border);
+  }
+  .card-header-icon {
+    width: 36px; height: 36px;
+    background: var(--cream);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .card-header h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    color: var(--text-primary);
+  }
+  .card-header p {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 1px;
+  }
+  .card-body { padding: 24px 28px; }
+
+  /* ---- FORM ELEMENTS ---- */
+  .field-grid { display: grid; gap: 12px; }
+  .field-grid.cols-2 { grid-template-columns: 1fr 1fr; }
+  .field-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+  label.field-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+  input[type="text"],
+  input[type="tel"] {
+    width: 100%;
+    height: 46px;
+    padding: 0 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--text-primary);
+    background: var(--cream);
+    transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+    outline: none;
+  }
+  input[type="text"]:focus,
+  input[type="tel"]:focus {
+    border-color: var(--gold);
+    background: var(--white);
+    box-shadow: 0 0 0 3px rgba(201,168,76,0.15);
+  }
+  input[type="text"]::placeholder,
+  input[type="tel"]::placeholder { color: #BBBDBE; }
+
+  /* ---- GENDER TOGGLE ---- */
+  .gender-row { display: flex; gap: 10px; }
+  .gender-opt { flex: 1; }
+  .gender-opt input[type="radio"] { display: none; }
+  .gender-opt label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 48px;
+    border-radius: 10px;
+    border: 1.5px solid var(--border);
+    background: var(--cream);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--text-muted);
+  }
+  .gender-opt input[type="radio"]:checked + label {
+    border-color: var(--navy);
+    background: var(--navy);
+    color: var(--white);
+  }
+  .gender-opt input#gMale:checked + label { border-color: var(--navy); background: var(--navy); }
+  .gender-opt input#gFemale:checked + label { border-color: #8B3A62; background: #8B3A62; }
+
+  .limit-hint {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    min-height: 18px;
+    transition: color 0.2s;
+  }
+  .limit-hint.warn { color: #C0392B; font-weight: 500; }
+
+  /* ---- SPORT CARDS ---- */
+  .sports-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 4px;
+  }
+  .sport-opt input[type="checkbox"] { display: none; }
+  .sport-opt label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 1.5px solid var(--border);
+    background: var(--cream);
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+  }
+  .sport-opt label .sport-icon {
+    font-size: 22px;
+    width: 32px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .sport-opt label .sport-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+  .sport-opt label .sport-price {
+    margin-left: auto;
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 400;
+  }
+  .sport-opt label .sport-check {
+    width: 18px; height: 18px;
+    border-radius: 5px;
+    border: 1.5px solid var(--border);
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s;
+    font-size: 11px;
+    color: transparent;
+  }
+  .sport-opt input[type="checkbox"]:checked + label {
+    border-color: var(--gold);
+    background: #FBF6E9;
+  }
+  .sport-opt input[type="checkbox"]:checked + label .sport-check {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--white);
+  }
+  .sport-opt.disabled label {
+    opacity: 0.38;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  /* ---- COST SUMMARY ---- */
+  .cost-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--navy);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-top: 16px;
+    transition: all 0.3s;
+  }
+  .cost-bar-label { font-size: 12px; color: rgba(255,255,255,0.5); letter-spacing: 0.06em; text-transform: uppercase; }
+  .cost-bar-amount { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 700; color: var(--gold); }
+  .cost-bar-games { font-size: 12px; color: rgba(255,255,255,0.45); margin-top: 2px; }
+
+  /* ---- TERMS & CONDITIONS ---- */
+  .terms-box {
+    border: 1.5px solid #E8D5A3;
+    background: #FFFAED;
+    border-radius: 12px;
+    padding: 16px 18px;
+  }
+  .terms-box p { font-size: 12px; color: #7A6230; line-height: 1.6; }
+  .terms-check-row {
+    display: flex; align-items: flex-start; gap: 10px;
+    margin-top: 12px;
+    cursor: pointer;
+  }
+  .terms-check-row input[type="checkbox"] { display: none; }
+  .custom-check {
+    width: 20px; height: 20px; flex-shrink: 0;
+    border-radius: 6px;
+    border: 1.5px solid #C9A84C;
+    background: var(--white);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    color: transparent;
+    transition: all 0.2s;
+    cursor: pointer;
+    margin-top: 1px;
+  }
+  #termsCheck:checked ~ .terms-check-row .custom-check,
+  .custom-check.checked {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--white);
+  }
+  .terms-check-row span { font-size: 13px; font-weight: 500; color: var(--text-primary); line-height: 1.5; }
+
+  /* ---- PAYMENT SECTION ---- */
+  .payment-section {
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.45s cubic-bezier(0.4,0,0.2,1), opacity 0.35s ease, margin-top 0.3s;
+    margin-top: 0;
+  }
+  .payment-section.open {
+    max-height: 400px;
+    opacity: 1;
+    margin-top: 16px;
+  }
+  .payment-inner {
+    border: 1.5px solid #E8C4CE;
+    background: #FFF5F7;
+    border-radius: 14px;
+    padding: 20px;
+  }
+  .payment-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 14px;
+  }
+  .payment-header h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px; font-weight: 700;
+    color: #8B3A62;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .bkash-badge {
+    background: #E2185A;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 100px;
+  }
+  .payment-number {
+    background: var(--white);
+    border: 1px solid #F5B8CC;
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 12px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .payment-number .pn-label { font-size: 11px; color: #B05070; text-transform: uppercase; letter-spacing: 0.06em; }
+  .payment-number .pn-num { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; color: #8B3A62; }
+  .payment-note { font-size: 11px; color: #B05070; line-height: 1.5; margin-bottom: 14px; background: white; padding: 8px 12px; border-radius: 8px; border: 1px solid #F5B8CC; }
+  .trx-input {
+    width: 100%;
+    height: 46px;
+    padding: 0 14px;
+    border: 1.5px solid #F5B8CC;
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px; letter-spacing: 0.05em;
+    color: var(--text-primary);
+    background: var(--white);
+    text-transform: uppercase;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .trx-input:focus { border-color: #E2185A; box-shadow: 0 0 0 3px rgba(226,24,90,0.1); }
+  .trx-input::placeholder { color: #CBA0B0; text-transform: none; letter-spacing: 0; font-size: 13px; }
+
+  /* ---- SUBMIT BUTTON ---- */
+  .submit-btn {
+    width: 100%;
+    height: 56px;
+    border-radius: 14px;
+    border: none;
+    background: var(--navy);
+    color: var(--white);
+    font-family: 'Syne', sans-serif;
+    font-size: 15px; font-weight: 700;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+    margin-top: 8px;
+  }
+  .submit-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(201,168,76,0) 0%, rgba(201,168,76,0.15) 50%, rgba(201,168,76,0) 100%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .submit-btn:hover:not(:disabled)::before { opacity: 1; }
+  .submit-btn:hover:not(:disabled) { background: #162435; transform: translateY(-1px); }
+  .submit-btn:active:not(:disabled) { transform: translateY(0); }
+  .submit-btn:disabled { background: #BEC3C8; cursor: not-allowed; }
+  .submit-btn .btn-text { position: relative; z-index: 1; }
+
+  /* ---- SUCCESS MODAL ---- */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(13,27,42,0.75);
+    display: none; align-items: center; justify-content: center;
+    z-index: 9999; padding: 20px;
+    backdrop-filter: blur(4px);
+  }
+  .modal-overlay.visible { display: flex; }
+  .modal-card {
+    background: var(--white);
+    border-radius: 24px;
+    padding: 44px 36px 36px;
+    max-width: 400px; width: 100%;
+    text-align: center;
+    animation: modalIn 0.4s cubic-bezier(0.34,1.56,0.64,1) both;
+  }
+  @keyframes modalIn {
+    from { transform: scale(0.85) translateY(24px); opacity: 0; }
+    to { transform: scale(1) translateY(0); opacity: 1; }
+  }
+  .modal-icon-wrap {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background: #EAFAF1;
+    margin: 0 auto 24px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .modal-icon {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--green);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .modal-icon svg { width: 20px; color: white; }
+  .modal-card h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px; font-weight: 800;
+    color: var(--text-primary); margin-bottom: 10px;
+  }
+  .modal-card p { font-size: 14px; color: var(--text-muted); line-height: 1.7; margin-bottom: 8px; }
+  .modal-detail {
+    background: var(--cream);
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin: 18px 0 24px;
+    display: flex; align-items: center; gap: 10px;
+    text-align: left;
+  }
+  .modal-detail .wa-icon { font-size: 28px; }
+  .modal-detail div { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+  .modal-detail div strong { color: var(--text-primary); display: block; font-size: 13px; }
+  .modal-close-btn {
+    width: 100%;
+    height: 50px;
+    border-radius: 12px;
+    border: none;
+    background: var(--navy);
+    color: var(--white);
+    font-family: 'Syne', sans-serif;
+    font-size: 14px; font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .modal-close-btn:hover { background: #162435; }
+
+  /* ---- DIVIDER ---- */
+  .section-divider { height: 1px; background: var(--border); margin: 0; }
+
+  /* ---- PHOTO UPLOAD ---- */
+  .photo-upload-area {
+    border: 2px dashed var(--border);
+    border-radius: 12px;
+    background: var(--cream);
+    padding: 24px 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 110px;
+  }
+  .photo-upload-area:hover { border-color: var(--gold); background: #FBF6E9; }
+  .photo-upload-area.has-file { border-style: solid; border-color: var(--gold); background: #FBF6E9; }
+  .photo-upload-icon { font-size: 28px; margin-bottom: 6px; }
+  .photo-upload-text { font-size: 13px; font-weight: 500; color: var(--text-primary); }
+  .photo-upload-sub { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+  .photo-error { font-size: 11px; color: #C0392B; margin-top: 5px; min-height: 16px; font-weight: 500; }
+
+  /* ---- RESPONSIVE ---- */
+  @media (max-width: 480px) {
+    .field-grid.cols-2 { grid-template-columns: 1fr; }
+    .field-grid.cols-3 { grid-template-columns: 1fr 1fr; }
+    .card-body { padding: 20px 18px; }
+    .card-header { padding: 18px 18px 14px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-dots"></div>
+  <div class="hero-badge">Registration Open · 2026</div>
+  <h1>Inter-School<br><span>Tournament</span></h1>
+  <p class="hero-sub">Compete. Conquer. Build your legacy on the field.</p>
+  <div class="hero-line"></div>
+</div>
+
+<div class="container">
+
+  <!-- Student Info -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-header-icon">🎓</div>
+      <div>
+        <h2>Student Information</h2>
+        <p>Your personal & academic details</p>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="field-grid cols-2" style="margin-bottom:12px;">
+        <div>
+          <label class="field-label">Full Name</label>
+          <input type="text" id="iName" placeholder="e.g. Mahir Hossain" required>
+        </div>
+        <div>
+          <label class="field-label">Student ID</label>
+          <input type="text" id="iId" placeholder="e.g. 2024-0182" required>
+        </div>
+      </div>
+      <div class="field-grid cols-3" style="margin-bottom:12px;">
+        <div>
+          <label class="field-label">Class</label>
+          <input type="text" id="iClass" placeholder="e.g. XI" required>
+        </div>
+        <div>
+          <label class="field-label">Section</label>
+          <input type="text" id="iSection" placeholder="e.g. A" required>
+        </div>
+        <div>
+          <label class="field-label">Roll No.</label>
+          <input type="text" id="iRoll" placeholder="e.g. 15">
+        </div>
+      </div>
+      <div class="field-grid cols-2">
+        <div>
+          <label class="field-label">WhatsApp Number</label>
+          <input type="tel" id="iContact" placeholder="01XXXXXXXXX" required>
+        </div>
+        <div>
+          <label class="field-label">Alternate Number <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:10px;color:#B0B3B5;">(optional)</span></label>
+          <input type="tel" id="iAltContact" placeholder="01XXXXXXXXX">
+        </div>
+      </div>
+
+      <!-- Photo Upload -->
+      <div style="margin-top:12px;">
+        <label class="field-label">Student Photo <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:10px;color:#B0B3B5;">· Max 1MB · JPG or PNG</span></label>
+        <div class="photo-upload-area" id="photoUploadArea" onclick="document.getElementById('iPhoto').click()">
+          <input type="file" id="iPhoto" accept="image/jpeg,image/png,image/webp" style="display:none;" onchange="handlePhotoChange(event)">
+          <div id="photoPlaceholder">
+            <div class="photo-upload-icon">📷</div>
+            <div class="photo-upload-text">Click to upload your photo</div>
+            <div class="photo-upload-sub">JPG, PNG · Max size 1 MB</div>
+          </div>
+          <div id="photoPreviewWrap" style="display:none; flex-direction:column; align-items:center; gap:10px;">
+            <img id="photoPreview" src="" alt="Preview" style="width:80px;height:80px;border-radius:50%;object-fit:cover;border:3px solid var(--gold);">
+            <div id="photoFileName" style="font-size:12px;color:var(--text-muted);"></div>
+            <button type="button" onclick="removePhoto(event)" style="font-size:11px;color:#C0392B;background:none;border:none;cursor:pointer;text-decoration:underline;">Remove</button>
+          </div>
+        </div>
+        <p class="photo-error" id="photoError"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Game Selection -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-header-icon">🏆</div>
+      <div>
+        <h2>Game Selection</h2>
+        <p>Choose your sports &amp; calculate your fee</p>
+      </div>
+    </div>
+    <div class="card-body">
+      <!-- Gender -->
+      <div style="margin-bottom:20px;">
+        <label class="field-label">Participant Gender</label>
+        <div class="gender-row">
+          <div class="gender-opt">
+            <input type="radio" name="gender" id="gMale" value="Male">
+            <label for="gMale">♂ Male</label>
+          </div>
+          <div class="gender-opt">
+            <input type="radio" name="gender" id="gFemale" value="Female">
+            <label for="gFemale">♀ Female</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sports -->
+      <div>
+        <label class="field-label" style="margin-bottom:10px;">Select Sports <span style="font-weight:400;text-transform:none;letter-spacing:0;color:#B0B3B5;font-size:11px;">· ৳500 per game</span></label>
+        <p class="limit-hint" id="limitHint">Select your gender first to see available sports.</p>
+        <div class="sports-grid">
+          <div class="sport-opt disabled" id="opt-football">
+            <input type="checkbox" id="s-football" value="Football">
+            <label for="s-football">
+              <span class="sport-icon">⚽</span>
+              <div><div class="sport-name">Football</div><div class="sport-price">৳500</div></div>
+              <span class="sport-check">✓</span>
+            </label>
+          </div>
+          <div class="sport-opt disabled" id="opt-volleyball">
+            <input type="checkbox" id="s-volleyball" value="Volleyball">
+            <label for="s-volleyball">
+              <span class="sport-icon">🏐</span>
+              <div><div class="sport-name">Volleyball</div><div class="sport-price">৳500</div></div>
+              <span class="sport-check">✓</span>
+            </label>
+          </div>
+          <div class="sport-opt disabled" id="opt-handball">
+            <input type="checkbox" id="s-handball" value="Handball">
+            <label for="s-handball">
+              <span class="sport-icon">🤾</span>
+              <div><div class="sport-name">Handball</div><div class="sport-price">৳500</div></div>
+              <span class="sport-check">✓</span>
+            </label>
+          </div>
+          <div class="sport-opt disabled" id="opt-badminton">
+            <input type="checkbox" id="s-badminton" value="Badminton">
+            <label for="s-badminton">
+              <span class="sport-icon">🏸</span>
+              <div><div class="sport-name">Badminton</div><div class="sport-price">৳500</div></div>
+              <span class="sport-check">✓</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cost Summary -->
+      <div class="cost-bar" id="costBar">
+        <div>
+          <div class="cost-bar-label">Registration Fee</div>
+          <div class="cost-bar-games" id="costGames">No sport selected</div>
+        </div>
+        <div class="cost-bar-amount" id="costAmount">৳0</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Terms & Payment -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-header-icon">📋</div>
+      <div>
+        <h2>Terms &amp; Payment</h2>
+        <p>Accept conditions and complete bKash payment</p>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="terms-box">
+        <p>⚠️ <strong>Important:</strong> Any kind of misinformation provided during registration will result in immediate disqualification. Selection is subject to review — unselected participants will receive a full refund.</p>
+        <div class="terms-check-row" id="termsCheckRow" onclick="toggleTerms()">
+          <div class="custom-check" id="customCheck">✓</div>
+          <span>I have read and agree to all terms &amp; conditions of Tournament 2026</span>
+        </div>
+        <input type="checkbox" id="termsCheck" style="display:none;">
+      </div>
+
+      <!-- Payment Section (dynamic) -->
+      <div class="payment-section" id="paymentSection">
+        <div class="payment-inner">
+          <div class="payment-header">
+            <h3>💳 bKash Payment</h3>
+            <span class="bkash-badge">Send Money</span>
+          </div>
+          <div class="payment-number">
+            <div>
+              <div class="pn-label">bKash Number</div>
+              <div class="pn-num">01XXXXXXXXX</div>
+            </div>
+          </div>
+          <div class="payment-note">
+            📌 Note: Send your exact registration fee amount. Screenshot your transaction for reference. Unselected participants will be fully refunded.
+          </div>
+          <label class="field-label" style="margin-bottom:6px; color:#B05070;">Transaction ID (TrxID)</label>
+          <input class="trx-input" type="text" id="iTrxId" placeholder="Enter your bKash Transaction ID">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Submit -->
+  <button class="submit-btn" id="submitBtn" disabled onclick="handleSubmit()">
+    <span class="btn-text">Complete Registration</span>
+  </button>
+  <p style="text-align:center; font-size:11px; color:var(--text-muted); margin-top:14px; letter-spacing:0.03em;">
+    By registering, you agree to the rules of Tournament 2026.
+  </p>
+
+</div>
+
+<!-- Success Modal -->
+<div class="modal-overlay" id="successModal">
+  <div class="modal-card">
+    <div class="modal-icon-wrap">
+      <div class="modal-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </div>
+    </div>
+    <h2>You're Registered! 🎉</h2>
+    <p>Your registration has been submitted successfully. Please hold tight while we review your details.</p>
+    <div class="modal-detail">
+      <div class="wa-icon">💬</div>
+      <div>
+        <strong>WhatsApp Confirmation Coming</strong>
+        We'll contact you on your registered number shortly to confirm your spot in the tournament.
+      </div>
+    </div>
+    <p id="modalSummary" style="font-size:12px; color:#999; margin-bottom:0;"></p>
+    <button class="modal-close-btn" style="margin-top:16px;" onclick="closeModal()">Got it, thanks!</button>
+  </div>
+</div>
+
+<script>
+  const COST_PER_GAME = 500;
+  const MAX_MALE = 3;
+  const MAX_FEMALE = 2;
+
+  const sports = ['football','volleyball','handball','badminton'];
+  const sportLabels = { football:'Football', volleyball:'Volleyball', handball:'Handball', badminton:'Badminton' };
+  let termsAccepted = false;
+
+  function getGender() {
+    const r = document.querySelector('input[name="gender"]:checked');
+    return r ? r.value : null;
+  }
+  function getCheckedSports() {
+    return sports.filter(s => document.getElementById('s-'+s).checked);
+  }
+  function getMaxSports() {
+    return getGender() === 'Female' ? MAX_FEMALE : MAX_MALE;
+  }
+
+  function updateCostBar() {
+    const checked = getCheckedSports();
+    const total = checked.length * COST_PER_GAME;
+    document.getElementById('costAmount').textContent = '৳' + total.toLocaleString();
+    document.getElementById('costGames').textContent = checked.length === 0
+      ? 'No sport selected'
+      : checked.map(s => sportLabels[s]).join(', ');
+  }
+
+  function applyGenderRules() {
+    const gender = getGender();
+    if (!gender) return;
+    const max = getMaxSports();
+    const hint = document.getElementById('limitHint');
+
+    // Football disabled for Female
+    const footOpt = document.getElementById('opt-football');
+    if (gender === 'Female') {
+      document.getElementById('s-football').checked = false;
+      footOpt.classList.add('disabled');
+    } else {
+      footOpt.classList.remove('disabled');
+    }
+
+    // Enable all (non-disabled)
+    sports.forEach(s => {
+      const opt = document.getElementById('opt-'+s);
+      if (s === 'football' && gender === 'Female') return;
+      opt.classList.remove('disabled');
+    });
+
+    enforceSportLimit(max);
+    hint.textContent = gender === 'Male'
+      ? 'Male: max 3 sports · Football, Volleyball, Handball, Badminton'
+      : 'Female: max 2 sports · Volleyball, Handball, Badminton';
+    hint.classList.remove('warn');
+    updateCostBar();
+    validateSubmit();
+  }
+
+  function enforceSportLimit(max) {
+    const checked = getCheckedSports();
+    const gender = getGender();
+    const hint = document.getElementById('limitHint');
+
+    if (checked.length >= max) {
+      // Disable unchecked
+      sports.forEach(s => {
+        const chk = document.getElementById('s-'+s);
+        const opt = document.getElementById('opt-'+s);
+        if (!chk.checked) {
+          if (!(s === 'football' && gender === 'Female')) {
+            opt.classList.add('disabled');
+          }
+        }
+      });
+      hint.textContent = `Maximum ${max} sports selected (${max === 2 ? 'Female limit' : 'Male limit'})`;
+      hint.classList.add('warn');
+    } else {
+      sports.forEach(s => {
+        const opt = document.getElementById('opt-'+s);
+        if (s === 'football' && gender === 'Female') return;
+        opt.classList.remove('disabled');
+      });
+      hint.textContent = gender === 'Male'
+        ? `Male: max 3 sports · Football, Volleyball, Handball, Badminton`
+        : `Female: max 2 sports · Volleyball, Handball, Badminton`;
+      hint.classList.remove('warn');
+    }
+  }
+
+  // Sport checkbox change
+  sports.forEach(s => {
+    document.getElementById('s-'+s).addEventListener('change', function() {
+      const gender = getGender();
+      if (!gender) { this.checked = false; return; }
+      const max = getMaxSports();
+      const checked = getCheckedSports();
+      if (this.checked && checked.length > max) {
+        this.checked = false;
+      }
+      enforceSportLimit(max);
+      updateCostBar();
+      validateSubmit();
+    });
+  });
+
+  // Gender change
+  document.querySelectorAll('input[name="gender"]').forEach(r => {
+    r.addEventListener('change', applyGenderRules);
+  });
+
+  // Terms
+  function toggleTerms() {
+    termsAccepted = !termsAccepted;
+    const customCheck = document.getElementById('customCheck');
+    const paymentSection = document.getElementById('paymentSection');
+    if (termsAccepted) {
+      customCheck.classList.add('checked');
+      paymentSection.classList.add('open');
+      document.getElementById('iTrxId').setAttribute('required', '');
+    } else {
+      customCheck.classList.remove('checked');
+      paymentSection.classList.remove('open');
+    }
+    validateSubmit();
+  }
+
+  function validateSubmit() {
+    const name = document.getElementById('iName').value.trim();
+    const id = document.getElementById('iId').value.trim();
+    const contact = document.getElementById('iContact').value.trim();
+    const gender = getGender();
+    const sports_sel = getCheckedSports();
+    const trx = document.getElementById('iTrxId').value.trim();
+
+    const valid = name && id && contact && gender && sports_sel.length > 0 && termsAccepted && trx;
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = !valid;
+  }
+
+  // Photo upload
+  let photoBase64 = null;
+
+  function handlePhotoChange(e) {
+    const file = e.target.files[0];
+    const errEl = document.getElementById('photoError');
+    const area = document.getElementById('photoUploadArea');
+    if (!file) return;
+
+    if (file.size > 1 * 1024 * 1024) {
+      errEl.textContent = '⚠ File too large. Please choose an image under 1 MB.';
+      e.target.value = '';
+      photoBase64 = null;
+      area.classList.remove('has-file');
+      document.getElementById('photoPlaceholder').style.display = '';
+      document.getElementById('photoPreviewWrap').style.display = 'none';
+      return;
+    }
+
+    errEl.textContent = '';
+    const reader = new FileReader();
+    reader.onload = function(ev) {
+      photoBase64 = ev.target.result;
+      document.getElementById('photoPreview').src = photoBase64;
+      document.getElementById('photoFileName').textContent = file.name + ' · ' + (file.size / 1024).toFixed(0) + ' KB';
+      document.getElementById('photoPlaceholder').style.display = 'none';
+      document.getElementById('photoPreviewWrap').style.display = 'flex';
+      area.classList.add('has-file');
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function removePhoto(e) {
+    e.stopPropagation();
+    photoBase64 = null;
+    document.getElementById('iPhoto').value = '';
+    document.getElementById('photoPreview').src = '';
+    document.getElementById('photoPreviewWrap').style.display = 'none';
+    document.getElementById('photoPlaceholder').style.display = '';
+    document.getElementById('photoUploadArea').classList.remove('has-file');
+    document.getElementById('photoError').textContent = '';
+  }
+
+
+  ['iName','iId','iContact','iClass','iSection','iTrxId'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', validateSubmit);
+  });
+
+  function handleSubmit() {
+    const btn = document.getElementById('submitBtn');
+    const checked = getCheckedSports();
+    const total = checked.length * COST_PER_GAME;
+    const name = document.getElementById('iName').value.trim();
+
+    btn.disabled = true;
+    btn.querySelector('.btn-text').textContent = 'Submitting…';
+
+    const data = {
+      name,
+      studentId: document.getElementById('iId').value.trim(),
+      class: document.getElementById('iClass').value.trim(),
+      section: document.getElementById('iSection').value.trim(),
+      roll: document.getElementById('iRoll').value.trim(),
+      contact: document.getElementById('iContact').value.trim(),
+      altContact: document.getElementById('iAltContact').value.trim(),
+      gender: getGender(),
+      sports: checked.map(s => sportLabels[s]),
+      totalFee: total,
+      trxId: document.getElementById('iTrxId').value.trim().toUpperCase(),
+      photo: photoBase64 || null,
+    };
+
+    // Set modal summary
+    document.getElementById('modalSummary').textContent =
+      `${name} · ${data.sports.join(', ')} · ৳${total.toLocaleString()} paid`;
+
+    const SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL';
+
+    const params = new URLSearchParams({
+      name:       data.name,
+      studentId:  data.studentId,
+      class:      data.class,
+      section:    data.section,
+      roll:       data.roll,
+      contact:    data.contact,
+      altContact: data.altContact,
+      gender:     data.gender,
+      sports:     data.sports.join(', '),
+      totalFee:   data.totalFee + ' BDT',
+      trxId:      data.trxId,
+      timestamp:  new Date().toLocaleString('en-BD', {timeZone:'Asia/Dhaka'})
+    });
+
+    fetch(SCRIPT_URL + '?' + params.toString(), {
+      method: 'GET',
+      mode: 'no-cors'
+    })
+    .finally(function() {
+      showModal();
+      btn.querySelector('.btn-text').textContent = 'Complete Registration';
+      resetForm();
+    });
+  }
+
+  function showModal() {
+    document.getElementById('successModal').classList.add('visible');
+  }
+
+  function closeModal() {
+    document.getElementById('successModal').classList.remove('visible');
+  }
+
+  function resetForm() {
+    ['iName','iId','iClass','iSection','iRoll','iContact','iAltContact','iTrxId'].forEach(id => {
+      document.getElementById(id).value = '';
+    });
+    removePhoto({ stopPropagation: ()=>{} });
+    document.querySelectorAll('input[name="gender"]').forEach(r => r.checked = false);
+    sports.forEach(s => {
+      document.getElementById('s-'+s).checked = false;
+      document.getElementById('opt-'+s).classList.add('disabled');
+    });
+    termsAccepted = false;
+    document.getElementById('customCheck').classList.remove('checked');
+    document.getElementById('paymentSection').classList.remove('open');
+    document.getElementById('limitHint').textContent = 'Select your gender first to see available sports.';
+    document.getElementById('limitHint').classList.remove('warn');
+    updateCostBar();
+    document.getElementById('submitBtn').disabled = true;
+  }
+
+  // Init
+  updateCostBar();
+</script>
+</body>
+</html>
